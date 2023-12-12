@@ -17,25 +17,25 @@ def world_bank_data_reading(filename):
 
     # Transpose the dataframe to have years as columns and countries as rows
     df_transposed = df.melt(id_vars=['Country Name', 'Country Code', 'Series Code','Series Name'],
-                                value_vars=df.columns[3:],
-                                var_name='Year',
-                                value_name='Value')
+                                value_vars = df.columns[3:],
+                                var_name = 'Year',
+                                value_name = 'Value')
 
     # Pivot the transposed dataframe to have years as columns
-    data_year = df_transposed.pivot_table(index=['Country Name', 'Country Code', 'Series Code','Series Name'],
-                                             columns='Year',
-                                             values='Value',
-                                             aggfunc='first').reset_index()
+    data_year = df_transposed.pivot_table(index = ['Country Name', 'Country Code', 'Series Code','Series Name'],
+                                             columns = 'Year',
+                                             values = 'Value',
+                                             aggfunc = 'first').reset_index()
 
     # Pivot the transposed dataframe to have countries as columns
-    data_country = df_transposed.pivot_table(index=['Year', 'Series Code'],
-                                               columns=['Country Name', 'Country Code'],
-                                               values='Value',
-                                               aggfunc='first').reset_index()
+    data_country = df_transposed.pivot_table(index = ['Year', 'Series Code'],
+                                               columns = ['Country Name', 'Country Code'],
+                                               values = 'Value',
+                                               aggfunc = 'first').reset_index()
 
     # Drop unnecessary columns and reset the index
-    data_year.reset_index(drop=True, inplace=True)
-    data_country.reset_index(drop=True, inplace=True)
+    data_year.reset_index(drop=True, inplace = True)
+    data_country.reset_index(drop=True, inplace = True)
     
     # Clean the transposed dataframe
     df_transposed.columns.name = None  
@@ -79,7 +79,7 @@ def save_and_read_transposed_data():
     _, _, df_transposed = world_bank_data_reading(filename)
 
     # Save transposed_data to a CSV file
-    df_transposed.to_csv("df_transposed.csv", index=False)
+    df_transposed.to_csv("df_transposed.csv", index = False)
     print("Transposed data saved to 'df_transposed.csv'.")
 
     # Read the saved CSV file back to a dataframe
